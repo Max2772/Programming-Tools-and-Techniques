@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Bibikau.Domain\Bibikau.Domain\Bibikau.Domain.csproj" />
+	  <ProjectReference Include="..\..\Bibikau.Mediator\Bibikau.Mediator\Bibikau.Mediator.csproj" />
+	</ItemGroup>
+
+</Project>

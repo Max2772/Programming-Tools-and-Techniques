@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfHospital xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Hospital>
+    <Name>Минская городская клиническая больница №1</Name>
+    <Address>ул. Интернациональная, 35</Address>
+    <Phone>+375 17 229-23-45</Phone>
+    <Departments>
+      <Department>
+        <Id>1</Id>
+        <Name>Кардиология</Name>
+        <Head>Др. Иванов</Head>
+        <Phone>+375 17 229-23-46</Phone>
+        <StaffCount>25</StaffCount>
+        <Capacity>60</Capacity>
+      </Department>
+      <Department>
+        <Id>2</Id>
+        <Name>Терапия</Name>
+        <Head>Др. Петрова</Head>
+        <Phone>+375 17 229-23-47</Phone>
+        <StaffCount>30</StaffCount>
+        <Capacity>80</Capacity>
+      </Department>
+    </Departments>
+  </Hospital>
+  <Hospital>
+    <Name>Минская городская детская больница №2</Name>
+    <Address>ул. Сурганова, 53</Address>
+    <Phone>+375 17 223-11-22</Phone>
+    <Departments>
+      <Department>
+        <Id>3</Id>
+        <Name>Педиатрия</Name>
+        <Head>Др. Смирнова</Head>
+        <Phone>+375 17 223-11-23</Phone>
+        <StaffCount>20</StaffCount>
+        <Capacity>50</Capacity>
+      </Department>
+      <Department>
+        <Id>4</Id>
+        <Name>Неврология</Name>
+        <Head>Др. Козлов</Head>
+        <Phone>+375 17 223-11-24</Phone>
+        <StaffCount>15</StaffCount>
+        <Capacity>40</Capacity>
+      </Department>
+    </Departments>
+  </Hospital>
+  <Hospital>
+    <Name>Республиканский научно-практический центр онкологии и медицинской радиологии</Name>
+    <Address>ул. Волгоградская, 19</Address>
+    <Phone>+375 17 247-55-66</Phone>
+    <Departments>
+      <Department>
+        <Id>5</Id>
+        <Name>Онкология</Name>
+        <Head>Др. Лебедев</Head>
+        <Phone>+375 17 247-55-67</Phone>
+        <StaffCount>40</StaffCount>
+        <Capacity>100</Capacity>
+      </Department>
+      <Department>
+        <Id>6</Id>
+        <Name>Лучевая терапия</Name>
+        <Head>Др. Алексеева</Head>
+        <Phone>+375 17 247-55-68</Phone>
+        <StaffCount>35</StaffCount>
+        <Capacity>80</Capacity>
+      </Department>
+    </Departments>
+  </Hospital>
+</ArrayOfHospital>
