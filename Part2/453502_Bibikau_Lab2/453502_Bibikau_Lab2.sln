@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "453502_Bibikau_Lab2", "453502_Bibikau_Lab2\453502_Bibikau_Lab2.csproj", "{F9C7413E-BB0C-43A4-B5F6-46685778BD3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{F52031A6-7D5F-44B2-9206-1667B831197B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9C7413E-BB0C-43A4-B5F6-46685778BD3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9C7413E-BB0C-43A4-B5F6-46685778BD3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9C7413E-BB0C-43A4-B5F6-46685778BD3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9C7413E-BB0C-43A4-B5F6-46685778BD3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F52031A6-7D5F-44B2-9206-1667B831197B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F52031A6-7D5F-44B2-9206-1667B831197B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F52031A6-7D5F-44B2-9206-1667B831197B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F52031A6-7D5F-44B2-9206-1667B831197B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
