@@ -1,4 +1,4 @@
-﻿namespace LB4;
+﻿namespace LB5;
 
 public partial class LoadingPage : ContentPage
 {

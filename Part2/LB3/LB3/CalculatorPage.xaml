@@ -19,24 +19,13 @@
                  BackgroundColor="Black"
                  HorizontalOptions="Fill" />
 
-        <Grid RowSpacing="10" ColumnSpacing="10">
-          <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-          </Grid.RowDefinitions>
-
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-          </Grid.ColumnDefinitions>
+        <Grid RowSpacing="10" ColumnSpacing="10" 
+              RowDefinitions="*,*,*,*,*"
+              ColumnDefinitions="*,*,*,*">
           
           <Button Text="C" Grid.Row="0" Grid.Column="0" Clicked="PressButton" />
-          <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="" />
+          <Label x:Name="EmptyLabel" 
+                 Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="" />
           <Button Text="=" Grid.Row="0" Grid.Column="3" Clicked="PressButton" />
           
           <Button Text="1" Grid.Row="1" Grid.Column="0" Clicked="PressButton" />
