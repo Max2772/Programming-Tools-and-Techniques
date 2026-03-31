@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LB5.Pages.SQLitePage"
-             Title="SPA Салон"
+             Title="SPA"
              BackgroundColor="#F7F3F7">
 
     <VerticalStackLayout Spacing="12" Padding="14">
 
-        <!-- Picker -->
-        <Frame CornerRadius="12"
-               BorderColor="#C9A8C9"
-               BackgroundColor="White"
-               Padding="6"
-               HasShadow="False">
-            <Picker x:Name="typePicker"
+        <Border Stroke="#C9A8C9"
+                StrokeThickness="1"
+                Background="White"
+                Padding="6"
+                StrokeShape="RoundRectangle 12">
+            <Picker x:Name="TypePicker"
                     Title="Выберите вид процедур..."
                     Loaded="LoadProcedureTypes"
                     SelectedIndexChanged="OnTypeSelected"
@@ -21,19 +21,16 @@
                     FontSize="Medium"
                     TitleColor="#AAAAAA"
                     TextColor="#3A2840" />
-        </Frame>
+        </Border>
 
-        <!-- Procedures list -->
-        <CollectionView x:Name="proceduresCollectionView"
+        <CollectionView x:Name="ProceduresCollectionView"
                         IsVisible="False">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="0,4"
-                           Padding="14,10"
-                           CornerRadius="10"
-                           BorderColor="#E8D8E8"
-                           BackgroundColor="White"
-                           HasShadow="False">
+                    <Border Stroke="#C9A8C9"
+                            Background="White"
+                            Padding="10"
+                            StrokeShape="RoundRectangle 12">
                         <VerticalStackLayout Spacing="4">
 
                             <Label Text="{Binding Name}"
@@ -54,13 +51,12 @@
                             </Label>
 
                         </VerticalStackLayout>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!-- Empty state -->
-        <Label x:Name="emptyStateLabel"
+        <Label x:Name="EmptyStateLabel"
                Text="Выберите вид процедур для отображения списка"
                FontSize="14"
                TextColor="#AAAAAA"

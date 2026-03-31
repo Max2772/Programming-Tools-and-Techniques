@@ -20,19 +20,20 @@ public partial class SQLitePage : ContentPage
     private void LoadProcedureTypes(object sender, EventArgs e)
     {
         _procedureTypes = new List<ProcedureType>(_sqLiteService.GetAllProcedureTypes());
-        typePicker.ItemsSource = _procedureTypes;
+        TypePicker.ItemsSource = _procedureTypes;
     }
 
     private void OnTypeSelected(object sender, EventArgs e)
     {
-        var selectedType = (ProcedureType)typePicker.SelectedItem;
+        var selectedType = (ProcedureType)TypePicker.SelectedItem;
 
         if (selectedType != null)
         {
             _procedures = new List<Procedure>(_sqLiteService.GetProceduresByType(selectedType.Id));
-            proceduresCollectionView.ItemsSource = _procedures;
-            proceduresCollectionView.IsVisible = true;
-            emptyStateLabel.IsVisible = false;
+            ProceduresCollectionView.ItemsSource = _procedures;
+            ProceduresCollectionView.IsVisible = true;
+            EmptyStateLabel.IsVisible = false;
+            TypePicker.Title = "";
         }
     }
 }
