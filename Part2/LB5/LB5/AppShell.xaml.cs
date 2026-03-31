@@ -1,9 +1,10 @@
-﻿namespace LB5;
-
-public partial class AppShell : Shell
+﻿namespace LB5
 {
-    public AppShell()
+    public partial class AppShell : Shell
     {
-        InitializeComponent();
+        public AppShell()
+        {
+            InitializeComponent();
+        }
     }
 }

@@ -3,17 +3,20 @@
     x:Class="LB5.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:LB5"
+    xmlns:local="clr-namespace:LB5.Pages"
+    Shell.FlyoutBehavior="Flyout"
     Title="LB5">
+
+    <FlyoutItem Title="Calculator" FlyoutDisplayOptions="AsSingleItem">
+        <ShellContent Route="CalculatorPage" ContentTemplate="{DataTemplate local:CalculatorPage}" />
+    </FlyoutItem>
     
-    <ShellContent
-        Title="Loading Page"
-        ContentTemplate="{DataTemplate local:LoadingPage}"
-        Route="LoadingPage" />
+    <FlyoutItem Title="ProgressBar" FlyoutDisplayOptions="AsSingleItem">
+        <ShellContent Route="ProgressBarPage" ContentTemplate="{DataTemplate local:LoadingPage}" />
+    </FlyoutItem>
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+    <FlyoutItem Title="SQLite" FlyoutDisplayOptions="AsSingleItem">
+        <ShellContent Route="SQLitePage" ContentTemplate="{DataTemplate local:SQLitePage}" />
+    </FlyoutItem>
+    
 </Shell>

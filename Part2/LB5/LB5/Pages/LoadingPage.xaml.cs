@@ -1,4 +1,4 @@
-﻿namespace LB5;
+﻿namespace LB5.Pages;
 
 public partial class LoadingPage : ContentPage
 {
@@ -6,16 +6,16 @@ public partial class LoadingPage : ContentPage
     {
         InitializeComponent();
     }
-    
+
     bool restartCalculation = false;
     private CancellationTokenSource Token;
     private Task<double> FindInt;
-    
+
     private async void StartClicked(object sender, EventArgs e)
     {
         StartBtn.IsEnabled = false;
         restartCalculation = FindInt != null && !FindInt.IsCompleted;
-        
+
         Token?.Cancel();
         Token = new CancellationTokenSource();
 
@@ -41,13 +41,13 @@ public partial class LoadingPage : ContentPage
             StartBtn.IsEnabled = true;
         }
     }
-    
+
     private void CancelClicked(object sender, EventArgs e)
     {
         restartCalculation = false;
         Token?.Cancel();
     }
-    
+
     private async Task<double> GetIntegral(CancellationToken Token)
     {
         //double step = 0.00000001;
@@ -61,14 +61,14 @@ public partial class LoadingPage : ContentPage
             Token.ThrowIfCancellationRequested();
 
             ans += Math.Sin(i) * step;
-            
+
             for (int j = 0; j < latency; j++)
             {
                 double a = 2 * 2;
             }
 
             int percent = (int)(i * 100);
-            
+
             if (percent != lastPercent)
             {
                 lastPercent = percent;

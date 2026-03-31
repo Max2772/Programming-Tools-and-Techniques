@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LB5.Pages.SQLitePage"
+             Title="SPA Салон"
+             BackgroundColor="#F7F3F7">
+
+    <VerticalStackLayout Spacing="12" Padding="14">
+
+        <!-- Picker -->
+        <Frame CornerRadius="12"
+               BorderColor="#C9A8C9"
+               BackgroundColor="White"
+               Padding="6"
+               HasShadow="False">
+            <Picker x:Name="typePicker"
+                    Title="Выберите вид процедур..."
+                    Loaded="LoadProcedureTypes"
+                    SelectedIndexChanged="OnTypeSelected"
+                    ItemDisplayBinding="{Binding Name}"
+                    FontSize="Medium"
+                    TitleColor="#AAAAAA"
+                    TextColor="#3A2840" />
+        </Frame>
+
+        <!-- Procedures list -->
+        <CollectionView x:Name="proceduresCollectionView"
+                        IsVisible="False">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,4"
+                           Padding="14,10"
+                           CornerRadius="10"
+                           BorderColor="#E8D8E8"
+                           BackgroundColor="White"
+                           HasShadow="False">
+                        <VerticalStackLayout Spacing="4">
+
+                            <Label Text="{Binding Name}"
+                                   FontSize="15"
+                                   FontAttributes="Bold"
+                                   TextColor="#3A2840" />
+
+                            <Label FontSize="13" TextColor="#7A6080">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="⏱ " />
+                                        <Span Text="{Binding DurationMinutes}" />
+                                        <Span Text=" мин   💵 " />
+                                        <Span Text="{Binding Price}" />
+                                        <Span Text=" BYN" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Empty state -->
+        <Label x:Name="emptyStateLabel"
+               Text="Выберите вид процедур для отображения списка"
+               FontSize="14"
+               TextColor="#AAAAAA"
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Center"
+               Margin="0,30,0,0" />
+
+    </VerticalStackLayout>
+</ContentPage>
