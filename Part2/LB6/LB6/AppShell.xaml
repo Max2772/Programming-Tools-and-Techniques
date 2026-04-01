@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <Shell
     x:Class="LB6.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -10,7 +11,7 @@
     <FlyoutItem Title="Calculator" FlyoutDisplayOptions="AsSingleItem">
         <ShellContent Route="CalculatorPage" ContentTemplate="{DataTemplate local:CalculatorPage}" />
     </FlyoutItem>
-    
+
     <FlyoutItem Title="ProgressBar" FlyoutDisplayOptions="AsSingleItem">
         <ShellContent Route="ProgressBarPage" ContentTemplate="{DataTemplate local:LoadingPage}" />
     </FlyoutItem>
@@ -18,5 +19,9 @@
     <FlyoutItem Title="SQLite" FlyoutDisplayOptions="AsSingleItem">
         <ShellContent Route="SQLitePage" ContentTemplate="{DataTemplate local:SQLitePage}" />
     </FlyoutItem>
-    
+
+    <FlyoutItem Title="Converter" FlyoutDisplayOptions="AsSingleItem">
+        <ShellContent Route="ConverterPage" ContentTemplate="{DataTemplate local:ConverterPage}" />
+    </FlyoutItem>
+
 </Shell>

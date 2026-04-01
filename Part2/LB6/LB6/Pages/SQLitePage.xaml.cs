@@ -1,5 +1,5 @@
-using LB6.Entities;
-using LB6.Services;
+using LB6.Entities.Database;
+using LB6.Services.Database;
 
 namespace LB6.Pages;
 

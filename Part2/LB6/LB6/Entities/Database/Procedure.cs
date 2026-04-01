@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace LB6.Entities;
+namespace LB6.Entities.Database;
 
 [Table("Procedures")]
 public class Procedure

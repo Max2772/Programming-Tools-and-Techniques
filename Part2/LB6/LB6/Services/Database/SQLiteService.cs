@@ -1,7 +1,7 @@
-﻿using LB6.Entities;
+﻿using LB6.Entities.Database;
 using SQLite;
 
-namespace LB6.Services;
+namespace LB6.Services.Database;
 
 public class SQLiteService : IDbService
 {
