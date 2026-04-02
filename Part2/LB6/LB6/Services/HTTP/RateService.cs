@@ -7,9 +7,9 @@ public class RateService : IRateService
 {
     HttpClient _httpClient;
 
-    public RateService(IHttpClientFactory httpClientFactory)
+    public RateService(HttpClient httpClient)
     {
-        _httpClient = httpClientFactory.CreateClient("API");
+        _httpClient = httpClient;
     }
 
     public async Task<IEnumerable<Rate>> GetRates(DateTime date)

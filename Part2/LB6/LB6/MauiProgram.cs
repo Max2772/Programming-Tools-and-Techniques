@@ -20,10 +20,12 @@ public static class MauiProgram
         
         builder.Services.AddTransient<IDbService, SQLiteService>();
         builder.Services.AddTransient<SQLitePage>();
-        
-        builder.Services.AddTransient<IRateService, RateService>();
+
+        builder.Services.AddHttpClient<IRateService, RateService>(opt =>
+        {
+            opt.BaseAddress = new Uri("https://api.nbrb.by/");
+        });
         builder.Services.AddTransient<ConverterPage>();
-        builder.Services.AddHttpClient("API", opt => opt.BaseAddress = new Uri("https://api.nbrb.by"));
 
 #if DEBUG
         builder.Logging.AddDebug();

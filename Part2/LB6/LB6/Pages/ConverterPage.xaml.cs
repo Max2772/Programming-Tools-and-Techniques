@@ -9,7 +9,7 @@ public partial class ConverterPage : ContentPage
     private readonly IRateService _rateService;
     private readonly ObservableCollection<Rate> _rates = new();
     private readonly ObservableCollection<Currency> _currencies = new();
-    private bool _isToByn = true; // true = иностранная → BYN, false = BYN → иностранная
+    private bool _isToByn = true;
 
     private static readonly IReadOnlyList<Currency> _supportedCurrencies = new[]
     {
@@ -100,7 +100,7 @@ public partial class ConverterPage : ContentPage
         }
         catch (Exception ex)
         {
-            ShowError($"Не удалось получить курсы: {ex.Message}");
+            ShowError($"Не удалось получить курс: {ex.Message}");
         }
     }
 
