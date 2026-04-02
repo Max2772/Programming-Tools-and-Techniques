@@ -1,38 +1,162 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LB6.Pages.ConverterPage"
-             Title="ConverterPage">
+             Title="ConverterPage"
+             BackgroundColor="#12151A">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="BgCard">#1E2229</Color>
+            <Color x:Key="Accent">#D4A843</Color>
+            <Color x:Key="TextPrimary">#E6EDF3</Color>
+            <Color x:Key="TextSecondary">#7D8590</Color>
+            <Color x:Key="Border">#2D3139</Color>
+            <Color x:Key="Success">#3FB950</Color>
+            <Color x:Key="Error">#F85149</Color>
+
+            <Style x:Key="Card" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{StaticResource BgCard}" />
+                <Setter Property="Stroke" Value="{StaticResource Border}" />
+                <Setter Property="StrokeThickness" Value="1" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+                <Setter Property="Padding" Value="16" />
+                <Setter Property="Margin" Value="16,5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
-        <StackLayout>
-            <DatePicker x:Name="DatePicker" Format="yyyy-MM-dd" Date="{Binding SelectedDate}" Margin="10" DateSelected="OnDateSelected"/>
+        <ScrollView>
+            <VerticalStackLayout Padding="0,16,0,32" Spacing="0">
 
-            <ListView x:Name="RatesListView" ItemsSource="{Binding Rates}" Margin="5,25,5,25">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Cur_Name}" Detail="{Binding Cur_OfficialRate, StringFormat='{0:F2} BYN'}" DetailColor="DimGray">
-                            <TextCell.TextColor>
-                                <!-- <AppThemeBinding Light="#000000" Dark="#FFFFFF" /> -->
-                            </TextCell.TextColor>
-                        </TextCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                <Label Text="Exchange Rates"
+                       TextColor="{StaticResource TextPrimary}"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       Margin="20,8,20,2" />
+                <Label x:Name="LastUpdatedLabel"
+                       Text="Belarusian National Bank"
+                       TextColor="{StaticResource TextSecondary}"
+                       FontSize="13"
+                       Margin="20,0,20,12" />
 
-            <Picker x:Name="CurrencyPicker" Title="Select Currency" 
-                    ItemsSource="{Binding Currencies}" 
-                    SelectedItem="{Binding SelectedCurrency}" 
-                    ItemDisplayBinding="{Binding Cur_Name}"
-                    Margin="10"
-            />
+                <Border Style="{StaticResource Card}">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0"
+                               Text="Date"
+                               TextColor="{StaticResource TextSecondary}"
+                               FontSize="14"
+                               VerticalOptions="Center" />
+                        <DatePicker x:Name="DatePicker"
+                                    Grid.Column="1"
+                                    Format="dd MMM yyyy"
+                                    TextColor="{StaticResource Accent}"
+                                    BackgroundColor="Transparent"
+                                    FontSize="14"
+                                    DateSelected="OnDateSelected"
+                                    VerticalOptions="Center" />
+                    </Grid>
+                </Border>
 
-            <Entry x:Name="ValueEntry" Placeholder="Value" Keyboard="Numeric" Margin="10"/>
-            
-            <Label x:Name="ResultLabel" FontSize="Large"
-                   Margin="10" FontAttributes="Bold"/>
+                <ActivityIndicator x:Name="LoadingIndicator"
+                                   IsRunning="False"
+                                   IsVisible="False"
+                                   Color="{StaticResource Accent}"
+                                   HorizontalOptions="Center"
+                                   Margin="0,6" />
 
-            <Button Text="Convert" Clicked="OnConvertClicked" Margin="10,10,10,25"/>
+                <CollectionView x:Name="RatesCollectionView"
+                                Margin="16,5"
+                                SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BackgroundColor="{StaticResource BgCard}"
+                                    Stroke="{StaticResource Border}"
+                                    StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 10"
+                                    Padding="14,11"
+                                    Margin="0,3">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                                        <Label Text="{Binding Cur_Name}"
+                                               TextColor="{StaticResource TextPrimary}"
+                                               FontSize="14"
+                                               LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding Cur_Abbreviation}"
+                                               TextColor="{StaticResource TextSecondary}"
+                                               FontSize="12" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1"
+                                           Text="{Binding Cur_OfficialRate, StringFormat='{0:F4} BYN'}"
+                                           TextColor="{StaticResource Accent}"
+                                           FontSize="15"
+                                           FontAttributes="Bold"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-        </StackLayout>
+                <Border Style="{StaticResource Card}" Margin="16,12,16,5">
+                    <VerticalStackLayout Spacing="12">
+
+                        <Picker x:Name="CurrencyPicker"
+                                Title="Select currency"
+                                TitleColor="{StaticResource TextSecondary}"
+                                TextColor="{StaticResource TextPrimary}"
+                                BackgroundColor="Transparent"
+                                ItemDisplayBinding="{Binding Cur_Name}" />
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Border}" />
+
+                        <Entry x:Name="ValueEntry"
+                               Placeholder="Enter amount"
+                               PlaceholderColor="{StaticResource TextSecondary}"
+                               TextColor="{StaticResource TextPrimary}"
+                               BackgroundColor="Transparent"
+                               Keyboard="Numeric"
+                               FontSize="16" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="Convert"
+                        BackgroundColor="{StaticResource Accent}"
+                        TextColor="#12151A"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="50"
+                        Margin="16,8"
+                        Clicked="OnConvertClicked" />
+
+                <Border x:Name="ResultCard"
+                        Style="{StaticResource Card}"
+                        IsVisible="False">
+                    <Border.Stroke>
+                        <SolidColorBrush Color="{StaticResource Success}" />
+                    </Border.Stroke>
+                    <Label x:Name="ResultLabel"
+                           TextColor="{StaticResource TextPrimary}"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+                </Border>
+
+                <Border x:Name="ErrorCard"
+                        Style="{StaticResource Card}"
+                        IsVisible="False">
+                    <Border.Stroke>
+                        <SolidColorBrush Color="{StaticResource Error}" />
+                    </Border.Stroke>
+                    <Label x:Name="ErrorLabel"
+                           TextColor="{StaticResource Error}"
+                           FontSize="14" />
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
