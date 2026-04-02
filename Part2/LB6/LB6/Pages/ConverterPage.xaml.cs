@@ -6,10 +6,10 @@ namespace LB6.Pages;
 
 public partial class ConverterPage : ContentPage
 {
-
     private readonly IRateService _rateService;
     private readonly ObservableCollection<Rate> _rates = new();
     private readonly ObservableCollection<Currency> _currencies = new();
+    private bool _isToByn = true; // true = иностранная → BYN, false = BYN → иностранная
 
     private static readonly IReadOnlyList<Currency> _supportedCurrencies = new[]
     {
@@ -20,7 +20,6 @@ public partial class ConverterPage : ContentPage
         new Currency { Cur_Abbreviation = "CNY", Cur_Name = "Китайский юань" },
         new Currency { Cur_Abbreviation = "GBP", Cur_Name = "Фунт стерлингов" },
     };
-
 
     public ConverterPage(IRateService rateService)
     {
@@ -37,7 +36,6 @@ public partial class ConverterPage : ContentPage
         _ = InitializeAsync();
     }
 
-
     private async Task InitializeAsync()
     {
         foreach (var currency in _supportedCurrencies)
@@ -46,9 +44,29 @@ public partial class ConverterPage : ContentPage
         await LoadRatesAsync(DatePicker.Date);
     }
 
-
     private async void OnDateSelected(object sender, DateChangedEventArgs e)
         => await LoadRatesAsync(e.NewDate);
+
+    private void OnDirectionToggled(object sender, EventArgs e)
+    {
+        _isToByn = !_isToByn;
+        UpdateDirectionUI();
+        HideMessages();
+    }
+
+    private void UpdateDirectionUI()
+    {
+        if (_isToByn)
+        {
+            DirectionLabel.Text = "Валюта  →  BYN";
+            EntryHintLabel.Text = "Введите сумму в иностранной валюте";
+        }
+        else
+        {
+            DirectionLabel.Text = "BYN  →  Валюта";
+            EntryHintLabel.Text = "Введите сумму в белорусских рублях";
+        }
+    }
 
     private async void OnConvertClicked(object sender, EventArgs e)
     {
@@ -56,13 +74,13 @@ public partial class ConverterPage : ContentPage
 
         if (CurrencyPicker.SelectedItem is not Currency selectedCurrency)
         {
-            ShowError("Please select a currency.");
+            ShowError("Пожалуйста, выберите валюту.");
             return;
         }
 
         if (!TryParseAmount(ValueEntry.Text, out decimal amount))
         {
-            ShowError("Please enter a valid positive number.");
+            ShowError("Пожалуйста, введите корректное положительное число.");
             return;
         }
 
@@ -74,7 +92,7 @@ public partial class ConverterPage : ContentPage
 
             if (rate is null)
             {
-                ShowError($"No rate found for {selectedCurrency.Cur_Abbreviation} on {DatePicker.Date:dd MMMM yyyy}.");
+                ShowError($"Курс для {selectedCurrency.Cur_Abbreviation} на {DatePicker.Date:dd MMMM yyyy} не найден.");
                 return;
             }
 
@@ -82,7 +100,7 @@ public partial class ConverterPage : ContentPage
         }
         catch (Exception ex)
         {
-            ShowError($"Could not fetch rates: {ex.Message}");
+            ShowError($"Не удалось получить курсы: {ex.Message}");
         }
     }
 
@@ -97,13 +115,16 @@ public partial class ConverterPage : ContentPage
 
             _rates.Clear();
             foreach (var rate in ratesForDate)
-                _rates.Add(rate);
+            {
+                if (_supportedCurrencies.Any(c => c.Cur_Abbreviation == rate.Cur_Abbreviation))
+                    _rates.Add(rate);
+            }
 
-            LastUpdatedLabel.Text = $"Updated: {date:dd MMMM yyyy}";
+            LastUpdatedLabel.Text = $"Обновлено: {date:dd MMMM yyyy}";
         }
         catch (Exception ex)
         {
-            ShowError($"Could not load rates: {ex.Message}");
+            ShowError($"Не удалось загрузить курсы: {ex.Message}");
         }
         finally
         {
@@ -119,14 +140,22 @@ public partial class ConverterPage : ContentPage
                && amount > 0;
     }
 
-    private static decimal CalculateConversion(decimal amount, Rate rate)
-        => amount * (decimal)rate.Cur_OfficialRate / rate.Cur_Scale;
+    private static decimal CalculateConversion(decimal amount, Rate rate, bool toByn)
+    {
+        decimal ratePerUnit = (decimal)rate.Cur_OfficialRate / rate.Cur_Scale;
+        return toByn
+            ? amount * ratePerUnit   // иностранная → BYN
+            : amount / ratePerUnit;  // BYN → иностранная
+    }
 
     private void ShowConversionResult(decimal amount, Rate rate)
     {
-        decimal result = CalculateConversion(amount, rate);
+        decimal result = CalculateConversion(amount, rate, _isToByn);
 
-        ResultLabel.Text = $"{amount} {rate.Cur_Abbreviation} = {result:F4} BYN";
+        ResultLabel.Text = _isToByn
+            ? $"{amount} {rate.Cur_Abbreviation} = {result:F4} BYN"
+            : $"{amount} BYN = {result:F4} {rate.Cur_Abbreviation}";
+
         ResultCard.IsVisible = true;
     }
 
