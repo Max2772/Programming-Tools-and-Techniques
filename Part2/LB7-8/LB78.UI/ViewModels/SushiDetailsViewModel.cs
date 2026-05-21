@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using LB78.Application.SushiUseCases.Commands;
 using LB78.Application.SushiUseCases.Queries;
 using LB78.UI.Pages;
-using LB78.UI.Services;
 
 namespace LB78.UI.ViewModels;
 
@@ -49,11 +48,6 @@ public partial class SushiDetailsViewModel(IMediator mediator) : ObservableObjec
             return;
 
         await mediator.Send(new DeleteSushiRequest(Sushi));
-
-        var imagePath = ImageStorageService.GetImagePath(Sushi.Id);
-        if (File.Exists(imagePath))
-            File.Delete(imagePath);
-
         await Shell.Current.GoToAsync("..");
     }
 }

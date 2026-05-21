@@ -49,10 +49,16 @@
             <Border Margin="0, 20, 0, 20"
                     Grid.Row="1"
                     IsVisible="{Binding SelectedSushiSet, Converter={StaticResource IsNotNullConverter}}">
-                <VerticalStackLayout Padding="5" Spacing="10">
-                    <Label Text="{Binding Path=SelectedSushiSet.Name, StringFormat='Набор: {0}'}"/>
-                    <Label Text="{Binding Path=SelectedSushiSet.Price, StringFormat='Цена: {0:C}'}"/>
-                </VerticalStackLayout>
+                <HorizontalStackLayout Padding="5" Spacing="15">
+                    <Image Source="{Binding Path=SelectedSushiSet.Id, Converter={StaticResource IdToImage}}"
+                           HeightRequest="100"
+                           WidthRequest="100"
+                           Aspect="AspectFill"/>
+                    <VerticalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="{Binding Path=SelectedSushiSet.Name, StringFormat='Набор: {0}'}"/>
+                        <Label Text="{Binding Path=SelectedSushiSet.Price, StringFormat='Цена: {0:C}'}"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
             </Border>
 
             <ScrollView Grid.Row="2"
@@ -77,17 +83,11 @@
                                     </Border.GestureRecognizers>
 
                                     <Border.Content>
-                                        <HorizontalStackLayout Spacing="15">
-                                            <Image Source="{Binding Id, Converter={StaticResource IdToImage}}"
-                                                   HeightRequest="50"
-                                                   WidthRequest="50"
-                                                   Aspect="AspectFill"/>
-                                            <VerticalStackLayout>
-                                                <Label Text="{Binding Name}" />
-                                                <Label Text="{Binding ReadyCount, StringFormat='Готово: {0} шт.'}"/>
-                                                <Label Text="{Binding Weight, StringFormat='Вес: {0} г'}"/>
-                                            </VerticalStackLayout>
-                                        </HorizontalStackLayout>
+                                        <VerticalStackLayout>
+                                            <Label Text="{Binding Name}" />
+                                            <Label Text="{Binding ReadyCount, StringFormat='Готово: {0} шт.'}"/>
+                                            <Label Text="{Binding Weight, StringFormat='Вес: {0} г'}"/>
+                                        </VerticalStackLayout>
                                     </Border.Content>
                                 </Border>
                             </VerticalStackLayout>

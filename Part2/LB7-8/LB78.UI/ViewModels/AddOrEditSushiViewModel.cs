@@ -2,7 +2,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LB78.Application.SushiSetUseCases.Queries;
 using LB78.Application.SushiUseCases.Commands;
-using LB78.UI.Services;
 using System.Collections.ObjectModel;
 
 namespace LB78.UI.ViewModels;
@@ -10,13 +9,11 @@ namespace LB78.UI.ViewModels;
 public partial class AddOrEditSushiViewModel(IMediator mediator) : ObservableObject, IQueryAttributable
 {
     IAddOrEditSushiRequest _request = null!;
-    private string? _pendingImagePath;
 
     [ObservableProperty] string name = string.Empty;
     [ObservableProperty] int readyCount;
     [ObservableProperty] decimal weight;
     [ObservableProperty] string description = string.Empty;
-    [ObservableProperty] string photoPath = "dotnet_bot.png";
 
     public ObservableCollection<SushiSet> SushiSets { get; set; } = new();
     [ObservableProperty] SushiSet? selectedSushiSet;
@@ -30,7 +27,6 @@ public partial class AddOrEditSushiViewModel(IMediator mediator) : ObservableObj
         ReadyCount = _request.Sushi.ReadyCount;
         Weight = _request.Sushi.Weight;
         Description = _request.Sushi.Description;
-        PhotoPath = ResolvePhotoPath(_request.Sushi);
 
         if (_request.Sushi.SushiSetId != 0 && string.IsNullOrEmpty(_request.Sushi.Name))
         {
@@ -79,17 +75,6 @@ public partial class AddOrEditSushiViewModel(IMediator mediator) : ObservableObj
         _request.Sushi.SushiSetId = SelectedSushiSet?.Id ?? _request.Sushi.SushiSetId;
 
         await mediator.Send(_request);
-
-        if (!string.IsNullOrEmpty(_pendingImagePath) && _request.Sushi.Id > 0)
-        {
-            var savedPath = await ImageStorageService.SaveImageAsync(_request.Sushi.Id, _pendingImagePath);
-            if (savedPath != null)
-            {
-                _request.Sushi.PhotoPath = savedPath;
-                await mediator.Send(new EditSushiRequest() { Sushi = _request.Sushi });
-            }
-        }
-
         await GoBack();
     }
 
@@ -97,39 +82,5 @@ public partial class AddOrEditSushiViewModel(IMediator mediator) : ObservableObj
     async Task GoBack()
     {
         await Shell.Current.GoToAsync("..");
-    }
-
-    [RelayCommand]
-    async Task SelectImage()
-    {
-        var result = await FilePicker.PickAsync(new PickOptions
-        {
-            FileTypes = FilePickerFileType.Images,
-            PickerTitle = "Выберите изображение"
-        });
-
-        if (result != null)
-        {
-            string targetFolder = Path.Combine(FileSystem.AppDataDirectory, "Images");
-            Directory.CreateDirectory(targetFolder);
-            string tempFile = Path.Combine(targetFolder, $"temp_{Guid.NewGuid()}.jpg");
-
-            await using (var sourceStream = await result.OpenReadAsync())
-            await using (var destinationStream = File.Create(tempFile))
-            {
-                await sourceStream.CopyToAsync(destinationStream);
-            }
-
-            _pendingImagePath = tempFile;
-            PhotoPath = tempFile;
-        }
-    }
-
-    private static string ResolvePhotoPath(Sushi item)
-    {
-        var path = ImageStorageService.GetImagePath(item.Id);
-        if (File.Exists(path))
-            return path;
-        return string.IsNullOrEmpty(item.PhotoPath) ? "dotnet_bot.png" : item.PhotoPath;
     }
 }

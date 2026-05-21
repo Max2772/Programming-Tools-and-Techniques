@@ -18,6 +18,10 @@
                     <Entry Placeholder="Название" Text="{Binding Name}" />
                     <Label Text="Цена" />
                     <Entry Placeholder="Цена" Keyboard="Numeric" Text="{Binding Price}" />
+                    <Image Source="{Binding PhotoPath}" HeightRequest="200"/>
+                    <Button Margin="0, 20, 0, 20"
+                            Text="Выбрать фото"
+                            Command="{Binding SelectImageCommand}" />
                 </VerticalStackLayout>
             </Border>
         </VerticalStackLayout>

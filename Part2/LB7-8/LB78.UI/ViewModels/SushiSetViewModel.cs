@@ -5,6 +5,7 @@ using LB78.Application.SushiSetUseCases.Queries;
 using LB78.Application.SushiUseCases.Commands;
 using LB78.Application.SushiUseCases.Queries;
 using LB78.UI.Pages;
+using LB78.UI.Services;
 using System.Collections.ObjectModel;
 
 namespace LB78.UI.ViewModels;
@@ -64,7 +65,13 @@ public partial class SushiSetViewModel(IMediator mediator) : ObservableObject
         if (!confirm)
             return;
 
+        var setId = SelectedSushiSet.Id;
         await _mediator.Send(new DeleteSushiSetRequest(SelectedSushiSet));
+
+        var imagePath = ImageStorageService.GetImagePath(setId);
+        if (File.Exists(imagePath))
+            File.Delete(imagePath);
+
         SelectedSushiSet = null;
         await GetSushiSets();
         await GetSushi();

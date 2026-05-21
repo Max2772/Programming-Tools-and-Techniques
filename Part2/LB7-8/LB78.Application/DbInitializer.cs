@@ -18,6 +18,7 @@ public static class DbInitializer
                 Id = i,
                 Name = $"Набор {i}",
                 Price = random.Next(15, 60),
+                PhotoPath = string.Empty,
                 SushiList = []
             });
         }
@@ -35,8 +36,7 @@ public static class DbInitializer
                     ReadyCount = random.Next(0, 10),
                     Weight = random.Next(30, 120),
                     Description = "Рис, нори, начинка",
-                    SushiSetId = i,
-                    PhotoPath = string.Empty
+                    SushiSetId = i
                 });
             }
         }

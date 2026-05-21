@@ -20,8 +20,7 @@ public class FakeSushiRepository : IRepository<Sushi>
                     ReadyCount = random.Next(0, 10),
                     Weight = random.Next(30, 120),
                     Description = "Рис, нори, начинка",
-                    SushiSetId = i,
-                    PhotoPath = string.Empty
+                    SushiSetId = i
                 });
             }
         }

@@ -15,6 +15,7 @@ public class FakeSushiSetRepository : IRepository<SushiSet>
                 Id = 1,
                 Name = "Классический",
                 Price = 25.50m,
+                PhotoPath = string.Empty,
                 SushiList = []
             },
             new()
@@ -22,6 +23,7 @@ public class FakeSushiSetRepository : IRepository<SushiSet>
                 Id = 2,
                 Name = "Премиум",
                 Price = 42.00m,
+                PhotoPath = string.Empty,
                 SushiList = []
             },
             new()
@@ -29,6 +31,7 @@ public class FakeSushiSetRepository : IRepository<SushiSet>
                 Id = 3,
                 Name = "Вегетарианский",
                 Price = 18.90m,
+                PhotoPath = string.Empty,
                 SushiList = []
             }
         ];
