@@ -11,12 +11,12 @@ public class RateService : IRateService
     {
         _httpClient = httpClient;
     }
-
+    
     public async Task<IEnumerable<Rate>> GetRates(DateTime date)
     {
         var formattedDate = date.ToString("yyyy-MM-dd");
         var response = await _httpClient.GetAsync($"exrates/rates?ondate={formattedDate}&periodicity=0");
-
+        
         if (response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();

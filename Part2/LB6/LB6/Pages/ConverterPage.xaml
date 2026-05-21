@@ -67,7 +67,7 @@
                                    HorizontalOptions="Center"
                                    Margin="0,6" />
 
-                <CollectionView x:Name="RatesCollectionView"
+                <CollectionView x:Name="RatesCollectionView" 
                                 Margin="16,5"
                                 SelectionMode="None">
                     <CollectionView.ItemTemplate>

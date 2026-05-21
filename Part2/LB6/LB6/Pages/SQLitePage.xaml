@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LB6.Pages.SQLitePage"
              Title="SPA"
-             BackgroundColor="#F7F3F7">
+             BackgroundColor="#F7F3F7"
+             Loaded="LoadProcedureTypes">
 
     <VerticalStackLayout Spacing="12" Padding="14">
 
@@ -15,7 +16,6 @@
                 StrokeShape="RoundRectangle 12">
             <Picker x:Name="TypePicker"
                     Title="Выберите вид процедур..."
-                    Loaded="LoadProcedureTypes"
                     SelectedIndexChanged="OnTypeSelected"
                     ItemDisplayBinding="{Binding Name}"
                     FontSize="Medium"
