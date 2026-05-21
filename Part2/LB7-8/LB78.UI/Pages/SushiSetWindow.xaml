@@ -20,6 +20,7 @@
     <ContentPage.Resources>
         <convertors:IsNotNullConvertor x:Key="IsNotNullConverter"/>
         <convertors:ReadyCountToColorConvertor x:Key="ReadyCountToColorConvertor"/>
+        <convertors:IdToImageConverter x:Key="IdToImage"/>
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
@@ -77,7 +78,7 @@
 
                                     <Border.Content>
                                         <HorizontalStackLayout Spacing="15">
-                                            <Image Source="{Binding PhotoPath}"
+                                            <Image Source="{Binding Id, Converter={StaticResource IdToImage}}"
                                                    HeightRequest="50"
                                                    WidthRequest="50"
                                                    Aspect="AspectFill"/>

@@ -5,7 +5,6 @@ using LB78.Application.SushiSetUseCases.Queries;
 using LB78.Application.SushiUseCases.Commands;
 using LB78.Application.SushiUseCases.Queries;
 using LB78.UI.Pages;
-using LB78.UI.Services;
 using System.Collections.ObjectModel;
 
 namespace LB78.UI.ViewModels;
@@ -101,14 +100,7 @@ public partial class SushiSetViewModel(IMediator mediator) : ObservableObject
         {
             SushiItems.Clear();
             foreach (var item in items)
-            {
-                var path = ImageStorageService.GetImagePath(item.Id);
-                if (File.Exists(path))
-                    item.PhotoPath = path;
-                else if (string.IsNullOrEmpty(item.PhotoPath))
-                    item.PhotoPath = "dotnet_bot.png";
                 SushiItems.Add(item);
-            }
         });
     }
 
