@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LB78.UI.Pages.SushiSetWindow"
+             xmlns:models="clr-namespace:LB78.UI.ViewModels"
+             x:DataType="models:SushiSetViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:convertors="clr-namespace:LB78.UI.ValueConvertors"
+             xmlns:entities="clr-namespace:LB78.Domain.Entities;assembly=LB78.Domain"
+             x:Name="SushiSetPage"
+             Title="Наборы суши">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior 
+            EventName="Appearing"
+            BindingContext="{Binding Source={x:Reference SushiSetPage}, Path=BindingContext}"
+            Command="{Binding Path=UpdateGroupListCommand}"/>
+    </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        <convertors:IsNotNullConvertor x:Key="IsNotNullConverter"/>
+        <convertors:ReadyCountToColorConvertor x:Key="ReadyCountToColorConvertor"/>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Добавить набор" Command="{Binding AddSushiSetCommand}" />
+        <ToolbarItem Text="Изменить набор" Command="{Binding EditSushiSetCommand}" />
+        <ToolbarItem Text="Удалить набор" Command="{Binding DeleteSushiSetCommand}" />
+        <ToolbarItem Text="Добавить суши" Command="{Binding AddSushiCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto,Auto,*"
+              Margin="5">
+            <Picker 
+                Title="Выберите набор суши"
+                ItemsSource="{Binding SushiSets}"
+                SelectedItem="{Binding SelectedSushiSet}"
+                ItemDisplayBinding="{Binding Name}">
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior 
+                        EventName="SelectedIndexChanged"
+                        BindingContext="{Binding Source={x:Reference SushiSetPage}, Path=BindingContext}"
+                        Command="{Binding Path=UpdateMembersListCommand}"/>
+                </Picker.Behaviors>
+            </Picker>
+
+            <Border Margin="0, 20, 0, 20"
+                    Grid.Row="1"
+                    IsVisible="{Binding SelectedSushiSet, Converter={StaticResource IsNotNullConverter}}">
+                <VerticalStackLayout Padding="5" Spacing="10">
+                    <Label Text="{Binding Path=SelectedSushiSet.Name, StringFormat='Набор: {0}'}"/>
+                    <Label Text="{Binding Path=SelectedSushiSet.Price, StringFormat='Цена: {0:C}'}"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <ScrollView Grid.Row="2"
+                        IsVisible="{Binding SelectedSushiSet, Converter={StaticResource IsNotNullConverter}}">
+                <CollectionView ItemsSource="{Binding SushiItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="entities:Sushi">
+                            <VerticalStackLayout>
+                                <Border Padding="20"
+                                    Margin="0,5,0,5"
+                                    BackgroundColor="{Binding ReadyCount, 
+                                        Converter={StaticResource ReadyCountToColorConvertor}}">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="7"/>
+                                    </Border.StrokeShape>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource 
+                                                AncestorType={x:Type models:SushiSetViewModel}},
+                                                Path=ShowDetailsCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                    </Border.GestureRecognizers>
+
+                                    <Border.Content>
+                                        <HorizontalStackLayout Spacing="15">
+                                            <Image Source="{Binding PhotoPath}"
+                                                   HeightRequest="50"
+                                                   WidthRequest="50"
+                                                   Aspect="AspectFill"/>
+                                            <VerticalStackLayout>
+                                                <Label Text="{Binding Name}" />
+                                                <Label Text="{Binding ReadyCount, StringFormat='Готово: {0} шт.'}"/>
+                                                <Label Text="{Binding Weight, StringFormat='Вес: {0} г'}"/>
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+                                    </Border.Content>
+                                </Border>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>

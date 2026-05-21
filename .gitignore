@@ -296,6 +296,9 @@ ServiceFabricBackup/
 # Microsoft Fakes
 FakesAssemblies/
 
+# Example
+Example
+
 # GhostDoc plugin setting file
 *.GhostDoc.xml
 
@@ -418,3 +421,8 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Other
+*.pdf
+.cursorignore
+*.zip

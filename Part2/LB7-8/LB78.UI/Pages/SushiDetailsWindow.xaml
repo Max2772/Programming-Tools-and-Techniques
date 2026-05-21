@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LB78.UI.Pages.SushiDetailsWindow"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:LB78.UI.ViewModels"
+             x:Name="SushiDetailsPage"
+             x:DataType="models:SushiDetailsViewModel"
+             Title="Подробности о суши">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior 
+            EventName="Appearing"
+            BindingContext="{Binding Source={x:Reference SushiDetailsPage}, Path=BindingContext}"
+            Command="{Binding Path=GetByIdSushiCommand}"/>
+    </ContentPage.Behaviors>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Изменить" Command="{Binding EditSushiCommand}" />
+        <ToolbarItem Text="Удалить" Command="{Binding DeleteSushiCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <VerticalStackLayout>
+            <Image Source="{Binding PhotoPath}"
+                   HeightRequest="200"
+                   Margin="20"/>
+            <Frame Padding="10" Margin="20">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="{Binding Name, StringFormat='Название: {0}'}"/>
+                    <Label Text="{Binding ReadyCount, StringFormat='Готово: {0} шт.'}"/>
+                    <Label Text="{Binding Weight, StringFormat='Вес: {0} г'}"/>
+                    <Label Text="{Binding Description, StringFormat='Описание: {0}'}"/>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+
+</ContentPage>
