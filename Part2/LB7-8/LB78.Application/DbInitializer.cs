@@ -29,14 +29,14 @@ public static class DbInitializer
         {
             for (int j = 0; j < 10; ++j)
             {
-                await unitOfWork.SushiRepository.AddAsync(new Sushi()
+                await unitOfWork.SushiRepository.AddAsync(new Sushi(
+                    $"Суши {(j + 1) + (i - 1) * 10}",
+                    random.Next(0, 10),
+                    random.Next(30, 120),
+                    "Рис, нори, начинка",
+                    i)
                 {
                     Id = (i - 1) * 10 + (j + 1),
-                    Name = $"Суши {(j + 1) + (i - 1) * 10}",
-                    ReadyCount = random.Next(0, 10),
-                    Weight = random.Next(30, 120),
-                    Description = "Рис, нори, начинка",
-                    SushiSetId = i
                 });
             }
         }

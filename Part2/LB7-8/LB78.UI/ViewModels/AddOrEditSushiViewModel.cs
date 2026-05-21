@@ -69,8 +69,8 @@ public partial class AddOrEditSushiViewModel(IMediator mediator) : ObservableObj
         }
 
         _request.Sushi.Name = Name;
-        _request.Sushi.ReadyCount = ReadyCount;
-        _request.Sushi.Weight = Weight;
+        _request.Sushi.ChangeReadyCount(ReadyCount);
+        _request.Sushi.ChangeWeight(Weight);
         _request.Sushi.Description = Description;
         _request.Sushi.SushiSetId = SelectedSushiSet?.Id ?? _request.Sushi.SushiSetId;
 
